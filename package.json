@@ -1,0 +1,42 @@
+{
+  "name": "test",
+  "devDependencies": {
+    "autoprefixer": "^6.4.0",
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.12.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "eslint": "^3.3.0",
+    "eslint-plugin-babel": "^3.3.0",
+    "eslint-plugin-import": "^1.13.0",
+    "eslint-plugin-react": "^6.0.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "json-loader": "^0.5.4",
+    "mobx": "^2.4.3",
+    "mobx-react": "^3.5.5",
+    "node-sass": "^3.8.0",
+    "postcss-loader": "^0.9.1",
+    "sass-loader": "^4.0.0",
+    "style-loader": "^0.13.1"
+  },
+  "dependencies": {
+    "chart.js": "^1.1.1",
+    "react": "^15.3.1",
+    "react-chartjs": "^0.8.0",
+    "react-dom": "^15.3.1",
+    "react-toolbox": "^1.2.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "scripts": {
+    "lint": "eslint 'src/**/*.{js,jsx}'",
+    "clean": "rm -f www/build.js www/build.css",
+    "start": "webpack-dev-server --hot --inline",
+    "build": "NODE_ENV=production webpack --progress --display-error-details"
+  }
+}

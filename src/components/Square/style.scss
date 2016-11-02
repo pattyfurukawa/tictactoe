@@ -1,0 +1,47 @@
+.double {
+    background-color: #FFFFFF;
+    width: 120px;
+    height: 120px;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-top-style: hidden;
+    border-left-style: hidden;
+    border-color: #000000;
+    border-width: 7px;
+}
+
+.hori {
+    background-color: #FFFFFF;
+    width: 120px;
+    height: 120px;
+    border-bottom-style: solid;
+    border-top-style: hidden;
+    border-left-style: hidden;
+    border-right-style: hidden;
+    border-color: #000000;
+    border-width: 7px;
+}
+
+.vert {
+    background-color: #FFFFFF;
+    width: 120px;
+    height: 120px;
+    border-left-style: hidden;
+    border-right-style: solid;
+    border-top-style: hidden;
+    border-bottom-style: hidden;
+    border-color: #000000;
+    border-width: 7px;
+}
+
+.none {
+    background-color: #FFFFFF;
+    border-top-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    border-right-style: hidden;
+    border-color: #000000;
+    border-width: 7px;
+    width: 120px;
+    height: 120px;
+}
