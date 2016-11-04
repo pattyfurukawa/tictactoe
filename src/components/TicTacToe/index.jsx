@@ -30,9 +30,9 @@ function getMoves(game) {
   for (var i=0; i<3; i++) {
     for (var j=0; j<3; j++) {
       if (game[i][j] != 'x' && game[i][j] != 'o') {
+        move = [];
         move.push(i,j);
         moves.push(move);
-        move = [];
       }
     }
   }
@@ -51,15 +51,15 @@ function resetGame(){
   return game;
 }
 
-function checkHorizontal(game, x, y, player) {
+function checkVertical(game, x, y, player) {
   for (var i = 0; i<3; i++) {
-    if(game[i][y] === player)
+    if(game[i][y] != player)
       return 0;;
   }
   return 1;
 }
 
-function checkVertical(game, x, y, player) {
+function checkHorizontal(game, x, y, player) {
   for (var i = 0; i<3; i++) {
     if(game[x][i] != player)
       return 0;;
@@ -122,12 +122,11 @@ function checkState(moves, state) {
 function computerPlay(game, player) {
   var m = getMoves(game);
   var g = [];
-  var p = changePlayer(player);
   var poss = [];
   for (var i = 0; i<m.length; i++) {
     g = copyGame(game);
     var move = m[i];
-    makePlay(g, player, move);
+    g = makePlay(g, player, move);
     if (checkWin(g, move[0], move[1], player))
       return (move[0], move[1], player);
     else if (checkTie(g))
@@ -135,9 +134,9 @@ function computerPlay(game, player) {
     else {
       var pos = ([move[0], move[1], computerPlay(g, changePlayer(player))]);
       if (pos[2] === player)
-        return p;
+        return pos;
       else
-        poss.push(p);
+        poss.push(pos);
     }
   }
   var play = checkState(poss, 't');
@@ -156,25 +155,30 @@ class TicTacToe extends React.Component {
   }
 
   onClick = (x,y) => {
-    if (this.state.gameon === false)
-      this.setState({message: 'Game Over! Please reset the board!'});
+    console.log(this.state.gameon);
     if (this.state.game[x][y] != '_')
       this.setState({message: 'Space Taken. Please choose again!'});
-    var gm = this.state.game;
-    gm[x][y] = this.state.turn;
-    if (checkWin(gm, x, y, this.state.turn))
-      this.setState({message: this.state.turn + 'wins!!', gameon: false});
-    if (checkTie(gm))
-      this.setState({message: "It's a tie! Please reset the board!", gameon: false});
-    this.setState({turn: changePlayer(this.state.turn)});
-    if (this.state.player === 'Computer' && this.state.gameon === true) {
-      var move = computerPlay(gm, this.state.turn);
-      gm[move[0]][move[1]] = this.state.turn;
-      if (checkWin(move[0], move[1], gm, this.state.turn))
-        this.setState({game: gm, message: 'Computer wins!!', gameon: false});
-      if(checkTie(gm))
-        this.setState({game: gm, message: "It's a tie!", gameon: false});
-      this.setState({turn: changePlayer(this.state.turn)});
+
+    if (this.state.gameon === false)
+      this.setState({message: 'Game Over! Please reset the board!'})
+    else {
+      var gm = this.state.game;
+      gm[x][y] = this.state.turn;
+      if (checkWin(gm, x, y, this.state.turn))
+        this.setState({message: this.state.turn + 'wins!!', gameon: false});
+      if (checkTie(gm))
+        this.setState({message: "It's a tie! Please reset the board!", gameon: false});
+      var t = changePlayer(this.state.turn);
+      if(this.state.player === 'Computer') {
+        var move = computerPlay(gm, t);
+        gm[move[0]][move[1]] = t;
+        if (checkWin(gm, move[0], move[1], this.state.turn))
+          this.setState({message: 'Computer Wins!', gameon: false});
+        if (checkTie(gm))
+          this.setState({message: "It's a tie, try again!", gameon: false});
+        t = changePlayer(t);
+      }
+      this.setState({game:gm, turn: t});
     }
   }
 
@@ -183,7 +187,7 @@ class TicTacToe extends React.Component {
   }
 
   clickStart = () => {
-    this.setState({game: resetGame(), turn: 'o', message:'', gameon: false});
+    this.setState({game: resetGame(), turn: 'o', message:'', gameon: true});
   }
 
   render() {
