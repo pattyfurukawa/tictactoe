@@ -3,13 +3,13 @@ import style from './style';
 import Square from '../Square';
 
 function copyGame(game) {
-  var g = resetGame();
+  var game = resetGame();
   for (var i = 0; i<3; i++) {
     for (var j=0; j<3; j++) {
       g[i][j] = game[i][j];
     }
   }
-  return g;
+  return game;
 }
 
 function changePlayer(player) {
@@ -169,7 +169,7 @@ class TicTacToe extends React.Component {
       if (checkTie(gm))
         this.setState({message: "It's a tie! Please reset the board!", gameon: false});
       var t = changePlayer(this.state.turn);
-      if(this.state.player === 'Computer') {
+      if(this.state.player === 'Computer' && this.state.gameon === false) {
         var move = computerPlay(gm, t);
         gm[move[0]][move[1]] = t;
         if (checkWin(gm, move[0], move[1], this.state.turn))
